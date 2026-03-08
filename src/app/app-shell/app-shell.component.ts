@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { AiTerminalComponent } from '../ai-terminal/ai-terminal.component';
 import { DecimalPipe } from '@angular/common';
 import {ArchitectureViewerComponent} from "../architecture-viewer/architecture-viewer.component";
 import {FileTreeComponent} from "../file-tree/file-tree.component";
+import {FinalOutputComponent} from "../final-output/final-output.component";
 import type { FileTreeOptions } from '../core/models/file-tree.options';
 
 import type {
@@ -36,7 +37,8 @@ import type {
     AiTerminalComponent,
     DecimalPipe,
     ArchitectureViewerComponent,
-    FileTreeComponent
+    FileTreeComponent,
+    FinalOutputComponent,
   ],
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.scss',
@@ -44,6 +46,11 @@ import type {
 export class AppShellComponent extends BaseComponent {
   private readonly port = inject(OrchestratorPort);
   readonly state = inject(AppStateService);
+  readonly selectedFile = signal<FileTreeOptions | null>(null);
+
+  onFileSelected(file: FileTreeOptions): void {
+    this.selectedFile.set(file);
+  }
 
   toggleTerminal(): void {
     this.state.terminalOpen.update(v => !v);
@@ -134,8 +141,4 @@ export class AppShellComponent extends BaseComponent {
       )
     );
   }
-
-  onFileSelected(file: FileTreeOptions): void {
-  console.log('File selected:', file.path);
-}
 }

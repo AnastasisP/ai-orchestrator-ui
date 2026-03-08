@@ -80,9 +80,12 @@
             <app-architecture-viewer [result]="state.architectureResult()!" />
           }
           @case ("output") {
-            <p style="color: var(--color-text-dim); padding: 24px">
-              Output canvas — M14
-            </p>
+            @if (state.finalOutput()) {
+              <app-final-output
+                [content]="state.finalOutput()"
+                [selectedFile]="selectedFile()"
+              />
+            }
           }
           @case ("history") {
             <p style="color: var(--color-text-dim); padding: 24px">

@@ -1,0 +1,80 @@
+<div class="output-canvas" @slideUp>
+
+  <!-- Header -->
+  <div class="output-header">
+    <div class="output-title">
+      <mat-icon>check_circle</mat-icon>
+      <h2>System Generated</h2>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="output-actions">
+      <button mat-stroked-button (click)="copyAll()">
+        <mat-icon>content_copy</mat-icon>
+        Copy All
+      </button>
+      <button mat-flat-button color="primary" (click)="downloadMd()">
+        <mat-icon>download</mat-icon>
+        Download .md
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div class="tab-bar">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'output'"
+      (click)="setTab('output')"
+    >
+      Final Output
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'file'"
+      (click)="setTab('file')"
+    >
+      Selected File
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab() === 'raw'"
+      (click)="setTab('raw')"
+    >
+      Raw
+    </button>
+  </div>
+
+  <!-- Tab content -->
+  <div class="tab-content">
+
+    @switch (activeTab()) {
+
+      @case ('output') {
+        <div
+          class="markdown-body"
+          #markdownContainer
+          [innerHTML]="parsedHtml"
+        ></div>
+      }
+
+      @case ('file') {
+        @if (selectedFile()) {
+          <div class="file-header">
+            <mat-icon>description</mat-icon>
+            <span>{{ selectedFile()!.path }}</span>
+          </div>
+          <pre class="code-block"><code>{{ selectedFile()!.content ?? '// No content available' }}</code></pre>
+        } @else {
+          <p class="empty-hint">Click a file in the Explorer to preview it here.</p>
+        }
+      }
+
+      @case ('raw') {
+        <pre class="raw-block">{{ content() }}</pre>
+      }
+
+    }
+
+  </div>
+</div>

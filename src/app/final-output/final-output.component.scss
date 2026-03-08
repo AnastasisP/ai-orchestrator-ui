@@ -1,0 +1,171 @@
+.output-canvas {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+// ── Header ───────────────────────────────────────────────────
+
+.output-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.output-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  mat-icon {
+    color: var(--color-green);
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--color-text);
+  }
+}
+
+.output-actions {
+  display: flex;
+  gap: 8px;
+}
+
+// ── Tab bar ──────────────────────────────────────────────────
+
+.tab-bar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-dim);
+  font-size: 12px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    color: var(--color-text);
+  }
+
+  &.active {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+  }
+}
+
+// ── Tab content ──────────────────────────────────────────────
+
+.tab-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+// ── Markdown body ────────────────────────────────────────────
+
+.markdown-body {
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.7;
+
+  h1, h2, h3 { color: var(--color-text); font-weight: 400; }
+  h1 { font-size: 22px; border-bottom: 1px solid var(--color-border); padding-bottom: 8px; }
+  h2 { font-size: 18px; }
+  h3 { font-size: 15px; color: var(--color-blue); }
+
+  p { color: var(--color-text-dim); }
+
+  a { color: var(--color-accent); text-decoration: none; }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: #1a1a1a;
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--color-yellow);
+  }
+
+  pre {
+    background: #0d0d0d;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 14px;
+    overflow-x: auto;
+
+    code {
+      background: none;
+      padding: 0;
+      color: var(--color-text);
+    }
+  }
+
+  ul, ol {
+    color: var(--color-text-dim);
+    padding-left: 20px;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 12px;
+    color: var(--color-text-dim);
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+// ── Code / Raw blocks ────────────────────────────────────────
+
+.code-block,
+.raw-block {
+  background: #0d0d0d;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #00ff41;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+.file-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-dim);
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.empty-hint {
+  color: var(--color-text-dim);
+  font-size: 13px;
+  font-style: italic;
+}
