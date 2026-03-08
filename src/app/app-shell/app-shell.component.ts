@@ -11,9 +11,10 @@ import { PipelineStatusComponent } from '../pipeline-status/pipeline-status.comp
 import { SharedMemoryComponent } from '../shared-memory/shared-memory.component';
 import { AiTerminalComponent } from '../ai-terminal/ai-terminal.component';
 import { DecimalPipe } from '@angular/common';
-import {ArchitectureViewerComponent} from "../architecture-viewer/architecture-viewer.component";
-import {FileTreeComponent} from "../file-tree/file-tree.component";
-import {FinalOutputComponent} from "../final-output/final-output.component";
+import { ArchitectureViewerComponent } from "../architecture-viewer/architecture-viewer.component";
+import { FileTreeComponent } from "../file-tree/file-tree.component";
+import { FinalOutputComponent } from "../final-output/final-output.component";
+import { SessionHistoryComponent } from '../session-history/session-history.component';
 import type { FileTreeOptions } from '../core/models/file-tree.options';
 
 import type {
@@ -23,6 +24,7 @@ import type {
   ProjectBriefOptions,
   SSEEventOptions,
 } from '../core/models/pipeline.options';
+import { SessionOptions } from '../core/models/session.options';
 
 @Component({
   selector: 'app-shell',
@@ -39,6 +41,7 @@ import type {
     ArchitectureViewerComponent,
     FileTreeComponent,
     FinalOutputComponent,
+    SessionHistoryComponent,
   ],
   templateUrl: './app-shell.component.html',
   styleUrl: './app-shell.component.scss',
@@ -47,7 +50,8 @@ export class AppShellComponent extends BaseComponent {
   private readonly port = inject(OrchestratorPort);
   readonly state = inject(AppStateService);
   readonly selectedFile = signal<FileTreeOptions | null>(null);
-
+  private _lastBrief: ProjectBriefOptions | null = null;
+  
   onFileSelected(file: FileTreeOptions): void {
     this.selectedFile.set(file);
   }
@@ -58,6 +62,7 @@ export class AppShellComponent extends BaseComponent {
 
   handleBriefSubmitted(brief: ProjectBriefOptions): void {
     // reset state
+    this._lastBrief = brief; // ← αποθήκευσε για το session
     this.state.agentNodes.set([]);
     this.state.activeAgent.set(null);
     this.state.totalCostSession.set(0);
@@ -122,9 +127,43 @@ export class AppShellComponent extends BaseComponent {
       case 'pipeline_complete': {
         this.state.isStreaming.set(false);
         this.state.canvasView.set('output');
+
+        // ← Αποθήκευση session
+        const newSession: SessionOptions = {
+          id: crypto.randomUUID(),
+          createdAt: new Date().toISOString(),
+          originalRequest: this._lastBrief?.request?? '',
+          pipeline: this.state.agentNodes().map(n => n.role),
+          totalCostUsd: this.state.totalCostSession(),
+          status: 'complete',
+        };
+        this.state.sessions.update(s => [newSession, ...s]);
         break;
       }
     }
+  }
+
+  onSessionSelected(session: SessionOptions): void {
+    if (session.agentOutputs) {
+      const implementer = session.agentOutputs.find(a => a.role === 'IMPLEMENTER');
+      if (implementer) {
+        if ((implementer as any).fileTree) this.state.fileTree.set((implementer as any).fileTree);
+        if ((implementer as any).finalOutput) this.state.finalOutput.set((implementer as any).finalOutput);
+      }
+      const architect = session.agentOutputs.find(a => a.role === 'ARCHITECT');
+      if (architect && (architect as any).architectureResult) {
+        this.state.architectureResult.set((architect as any).architectureResult);
+      }
+    }
+    this.state.canvasView.set('output');
+  }
+
+  onSessionDeleted(id: string): void {
+    this.port.deleteSession(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.state.sessions.update(sessions => sessions.filter(s => s.id !== id));
+      });
   }
 
   private updateNodeStatus(role: AgentRole, status: AgentStatus): void {

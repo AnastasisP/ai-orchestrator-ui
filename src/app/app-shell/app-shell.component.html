@@ -21,7 +21,11 @@
       position="start"
     >
       <div class="sidenav-section-title">EXPLORER</div>
-
+      <div class="nav-btn" (click)="state.canvasView.set('history')">
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+      </div>
+      
       @if (state.fileTree().length > 0) {
         <app-file-tree
           [nodes]="state.fileTree()"
@@ -88,9 +92,11 @@
             }
           }
           @case ("history") {
-            <p style="color: var(--color-text-dim); padding: 24px">
-              History canvas — M16
-            </p>
+            <app-session-history
+              [sessions]="state.sessions()"
+              (sessionSelected)="onSessionSelected($event)"
+              (sessionDeleted)="onSessionDeleted($event)"
+            />
           }
         }
       </div>
