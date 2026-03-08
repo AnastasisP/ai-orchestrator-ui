@@ -1,0 +1,24 @@
+<div class="terminal-wrapper" [class.open]="isOpen()">
+
+  <div class="terminal-header">
+    <span class="agent-badge">
+      ◉ {{ activeAgent() ?? 'TERMINAL' }}
+    </span>
+    <button
+      mat-icon-button
+      type="button"
+      (click)="closeRequested.emit()"
+      aria-label="Toggle terminal"
+    >
+      <mat-icon>{{ isOpen() ? 'expand_more' : 'expand_less' }}</mat-icon>
+    </button>
+  </div>
+
+  @if (isOpen()) {
+    <div class="terminal-body">
+      <pre class="terminal-text">{{ streamText() }}@if (isStreaming()) {<span class="cursor">▌</span>}</pre>
+      <div #terminalEnd></div>
+    </div>
+  }
+
+</div>

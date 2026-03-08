@@ -1,0 +1,61 @@
+.terminal-wrapper {
+  background: #0d0d0d;
+  border-top: 1px solid var(--color-border);
+  height: 40px;
+  transition: height 0.2s ease;
+  overflow: hidden;
+
+  &.open {
+    height: 240px;
+  }
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 40px;
+  color: var(--color-text-dim);
+  font-size: 12px;
+}
+
+.agent-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #00ff41;
+}
+
+.terminal-body {
+  height: calc(100% - 40px);
+  padding: 8px 12px;
+  overflow-y: auto;
+}
+
+.terminal-text {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #00ff41;
+}
+
+/* blinking cursor */
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: #00ff41;
+  animation: cursor-blink 1s step-start infinite;
+}
+
+@keyframes cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}

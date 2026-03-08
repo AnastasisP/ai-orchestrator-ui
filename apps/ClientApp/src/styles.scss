@@ -1,0 +1,77 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Roboto,
+    density: 0,
+  ));
+}/* You can add global styles to this file, and also import other style files */
+
+// 1. Material core styles (typography baseline, elevation, etc.)
+@include mat.core();
+
+// 2. Define the M3 dark theme
+$dark-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+  ),
+  typography: (
+    brand-family: 'Segoe UI, sans-serif',
+    plain-family: 'Segoe UI, sans-serif',
+  ),
+));
+
+// 3. Apply to :root scoped by .dark on <html>
+.dark {
+  color-scheme: dark;
+  @include mat.all-component-themes($dark-theme);
+  
+}
+
+// 4. Global design tokens
+:root {
+  --color-bg:       #1e1e1e;
+  --color-panel:    #252526;
+  --color-border:   #3c3c3c;
+  --color-accent:   #007ACC;
+  --color-text:     #d4d4d4;
+  --color-text-dim: #858585;
+  --color-green:    #4EC9B0;
+  --color-yellow:   #DCDCAA;
+  --color-blue:     #9CDCFE;
+  --font-mono:      'Cascadia Code', 'Fira Code', monospace;
+  --font-ui:        'Segoe UI', sans-serif;
+}
+
+// 5. Global resets
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+// 6. Monospace utility
+.mono {
+  font-family: var(--font-mono);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

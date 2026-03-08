@@ -1,0 +1,139 @@
+.history-canvas {
+  padding: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  mat-icon {
+    color: var(--color-accent);
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--color-text);
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  color: var(--color-text-dim);
+  gap: 12px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    opacity: 0.4;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.history-table {
+  width: 100%;
+  background: var(--color-panel);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+// Material table overrides
+::ng-deep .history-table {
+  .mat-mdc-header-row {
+    background: #2d2d2d;
+  }
+
+  .mat-mdc-header-cell {
+    color: var(--color-text-dim);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom-color: var(--color-border);
+  }
+
+  .mat-mdc-cell {
+    color: var(--color-text);
+    font-size: 12px;
+    border-bottom-color: var(--color-border);
+  }
+}
+
+.session-row {
+  cursor: pointer;
+  transition: background 0.1s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.request-cell {
+  max-width: 280px;
+  font-size: 12px;
+  color: var(--color-text-dim);
+}
+
+.cost-cell {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-green);
+}
+
+.pipeline-chips {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+
+.role-chip {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: rgba(0, 122, 204, 0.15);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: capitalize;
+
+  &.status-complete {
+    background: rgba(78, 201, 176, 0.15);
+    color: var(--color-green);
+  }
+
+  &.status-error {
+    background: rgba(229, 115, 115, 0.15);
+    color: #E57373;
+  }
+
+  &.status-running {
+    background: rgba(0, 122, 204, 0.15);
+    color: var(--color-accent);
+  }
+}

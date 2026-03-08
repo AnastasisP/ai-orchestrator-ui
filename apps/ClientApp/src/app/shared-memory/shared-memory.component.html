@@ -1,0 +1,56 @@
+<div class="memory-root">
+  @if (entries().length === 0) {
+    <div class="memory-empty">
+      <mat-icon>memory</mat-icon>
+      <p>Waiting for first agent to complete...</p>
+    </div>
+  } @else {
+
+    @if (injectingAgent()) {
+      <div class="injecting-indicator">
+        <mat-icon class="inject-arrow">arrow_forward</mat-icon>
+        <span>Injecting context into {{ injectingAgent() }}...</span>
+      </div>
+    }
+
+    <div class="memory-list">
+      @for (entry of entries(); track entry.summary) {
+        <div class="memory-entry" @fadeIn>
+          <div class="entry-header">
+            <div
+              class="agent-pill"
+              [style.border-color]="meta[entry.role].color"
+            >
+              <mat-icon
+                class="agent-icon"
+                [style.color]="meta[entry.role].color"
+              >
+                {{ meta[entry.role].icon }}
+              </mat-icon>
+              <span
+                class="agent-label"
+                [style.color]="meta[entry.role].color"
+              >
+                {{ meta[entry.role].label }}
+              </span>
+            </div>
+          </div>
+
+          <div class="entry-summary">
+            {{ entry.summary }}
+          </div>
+
+          <div class="entry-chips">
+            @for (kp of entry.keyPoints; track kp) {
+              <mat-chip class="memory-chip">
+                {{ kp }}
+              </mat-chip>
+            }
+          </div>
+
+          <div class="entry-divider"></div>
+        </div>
+      }
+    </div>
+  }
+</div>

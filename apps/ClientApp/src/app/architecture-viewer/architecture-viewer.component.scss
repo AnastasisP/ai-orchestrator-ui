@@ -1,0 +1,208 @@
+.arch-canvas {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.arch-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  .arch-icon {
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
+    color: var(--color-green);
+  }
+}
+
+.arch-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--color-text);
+}
+
+.arch-subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--color-text-dim);
+}
+
+.arch-body {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+// ── Left Panel ──────────────────────────────────────────────
+
+.components-panel {
+  flex: 0 0 60%;
+}
+
+.panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin: 0 0 10px;
+}
+
+.component-card {
+  background: var(--color-panel) !important;
+  border-left: 3px solid transparent;
+  margin-bottom: 10px;
+  border-radius: 4px !important;
+}
+
+.comp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.comp-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+}
+
+.comp-type-badge {
+  font-size: 10px;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 1px 7px;
+  text-transform: capitalize;
+}
+
+.comp-description {
+  font-size: 12px;
+  color: var(--color-text-dim);
+  margin: 0 0 6px;
+}
+
+.comp-deps {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.deps-label {
+  font-size: 10px;
+  color: var(--color-text-dim);
+  margin-right: 4px;
+}
+
+.dep-chip {
+  font-size: 10px !important;
+  background: #1f1f1f !important;
+  color: var(--color-blue) !important;
+  min-height: 20px !important;
+}
+
+// ── Right Panel ─────────────────────────────────────────────
+
+.tech-panel {
+  flex: 0 0 calc(40% - 20px);
+}
+
+.tech-group {
+  margin-bottom: 12px;
+}
+
+.tech-category-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-dim);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tech-badge {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  font-weight: 600;
+}
+
+// ── Rationale ───────────────────────────────────────────────
+
+.rationale-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-yellow);
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.rationale-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-yellow);
+  margin-bottom: 8px;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.rationale-text {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--color-text-dim);
+  margin: 0;
+  line-height: 1.6;
+}
+
+// ── Data Flow ───────────────────────────────────────────────
+
+.data-flow {
+  background: #0d0d0d;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+
+.data-flow-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-dim);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.data-flow-text {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #4EC9B0;
+  white-space: pre-wrap;
+}

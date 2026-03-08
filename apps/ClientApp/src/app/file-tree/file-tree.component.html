@@ -1,0 +1,35 @@
+@for (node of nodes(); track node.path) {
+  @if (node.type === "folder") {
+    <!-- Folder row -->
+    <div
+      class="tree-item folder"
+      [style.padding-left.px]="depth() * 16 + 8"
+      (click)="toggleFolder(node.path)"
+    >
+      <mat-icon class="tree-icon folder-icon">
+        {{ expandedPaths().has(node.path) ? "folder_open" : "folder" }}
+      </mat-icon>
+      <span class="tree-label">{{ node.name }}</span>
+    </div>
+
+    <!-- Recursive children -->
+    @if (expandedPaths().has(node.path)) {
+      <app-file-tree
+        [nodes]="node.children ?? []"
+        [depth]="depth() + 1"
+        (fileSelected)="fileSelected.emit($event)"
+      />
+    }
+  } @else {
+    <!-- File row -->
+    <div
+      class="tree-item file"
+      [style.padding-left.px]="depth() * 16 + 8"
+      (click)="fileSelected.emit(node)"
+    >
+      <span class="file-icon">{{ getFileIcon(node.language) }}</span>
+
+      <span class="tree-label">{{ node.name }}</span>
+    </div>
+  }
+}

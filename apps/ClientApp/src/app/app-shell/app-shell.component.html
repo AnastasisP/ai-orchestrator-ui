@@ -1,0 +1,124 @@
+<div class="ide-root">
+  <!-- Header / Title Bar -->
+  <header class="ide-header">
+    <span class="ide-logo">⬡</span>
+    <span class="ide-title">AI System Designer</span>
+    <div class="ide-header-right">
+      <span class="cost-badge"
+        >${{ state.totalCostSession() | number: "1.4-4" }}</span
+      >
+      <mat-icon>settings</mat-icon>
+    </div>
+  </header>
+
+  <!-- Main IDE Body -->
+  <mat-sidenav-container class="ide-body">
+    <!-- Left Sidenav: Explorer -->
+    <mat-sidenav
+      class="left-sidenav"
+      mode="side"
+      [opened]="state.leftSidenavOpen()"
+      position="start"
+    >
+      <div class="sidenav-section-title">EXPLORER</div>
+      <div class="nav-btn" (click)="state.canvasView.set('history')">
+        <mat-icon>history</mat-icon>
+        <span>History</span>
+      </div>
+      
+      @if (state.fileTree().length > 0) {
+        <app-file-tree
+          [nodes]="state.fileTree()"
+          (fileSelected)="onFileSelected($event)"
+        />
+      } @else {
+        <div
+          style="padding: 12px; font-size: 12px; color: var(--color-text-dim)"
+        >
+          No files yet — run the pipeline to generate a project.
+        </div>
+      }
+    </mat-sidenav>
+
+    <!-- Right Sidenav: Shared Memory -->
+    <mat-sidenav
+      class="right-sidenav"
+      mode="over"
+      position="end"
+      [opened]="state.rightSidenavOpen()"
+    >
+      <div class="sidenav-section-title">🧠 SHARED CONTEXT</div>
+      <app-shared-memory
+        [entries]="state.contextEntries()"
+        [injectingAgent]="state.activeAgent()"
+      />
+    </mat-sidenav>
+
+    <!-- Center Canvas -->
+    <mat-sidenav-content class="ide-canvas">
+      <!-- Pipeline Status Strip -->
+      <div class="pipeline-strip-placeholder">
+        @if (state.agentNodes().length > 0) {
+          <app-pipeline-status [nodes]="state.agentNodes()" />
+        } @else {
+          <span style="color: var(--color-text-dim); font-size: 11px"
+            >Pipeline Strip</span
+          >
+        }
+      </div>
+
+      <!-- Dynamic Canvas Area -->
+      <div class="canvas-area">
+        @switch (state.canvasView()) {
+          @case ("input") {
+            <app-zero-click-input
+              (briefSubmitted)="handleBriefSubmitted($event)"
+            />
+          }
+          @case ("execution") {
+            <p style="color: var(--color-text-dim); padding: 24px">
+              Execution canvas — M09
+            </p>
+          }
+          @case ("architecture") {
+            <app-architecture-viewer [result]="state.architectureResult()!" />
+          }
+          @case ("output") {
+            @if (state.finalOutput()) {
+              <app-final-output
+                [content]="state.finalOutput()"
+                [selectedFile]="selectedFile()"
+              />
+            }
+          }
+          @case ("history") {
+            <app-session-history
+              [sessions]="state.sessions()"
+              (sessionSelected)="onSessionSelected($event)"
+              (sessionDeleted)="onSessionDeleted($event)"
+            />
+          }
+        }
+      </div>
+
+      <!-- Terminal -->
+      <app-ai-terminal
+        [streamText]="state.streamingText()"
+        [activeAgent]="state.activeAgent()"
+        [isOpen]="state.terminalOpen()"
+        [isStreaming]="state.isStreaming()"
+        (closeRequested)="toggleTerminal()"
+      />
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!-- Bottom Status Bar -->
+  <footer class="status-bar">
+    <span class="status-item"
+      >● {{ state.isStreaming() ? "Running" : "Ready" }}</span
+    >
+    <span class="status-item"
+      >{{ state.totalCostSession() | number: "1.4-4" }} $ / session</span
+    >
+  </footer>
+</div>

@@ -1,0 +1,33 @@
+<div class="input-canvas">
+  <div class="input-header">
+    <div class="header-icon">⬡</div>
+    <h1>AI System Designer</h1>
+    <p>Describe what you want to build. The AI will design and implement it.</p>
+  </div>
+
+  <textarea
+    class="brief-textarea"
+    [(ngModel)]="briefText"
+    placeholder="Describe the system you want to build..."
+    (keydown.control.enter)="submit()"
+    rows="5"
+  ></textarea>
+
+  <div class="input-footer">
+    <span class="char-count">{{ briefText().length }} chars</span>
+    <button
+      mat-flat-button
+      color="primary"
+      [disabled]="briefText().trim().length === 0"
+      (click)="submit()"
+    >
+      ▶ Generate System
+    </button>
+  </div>
+
+  <div class="chips-row">
+    @for (example of examples; track example) {
+      <mat-chip (click)="briefText.set(example)">{{ example }}</mat-chip>
+    }
+  </div>
+</div>
