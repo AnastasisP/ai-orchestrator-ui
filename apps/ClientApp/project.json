@@ -1,0 +1,31 @@
+{
+  "name": "client-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/ClientApp/src",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:browser-esbuild",
+      "options": {
+        "outputPath": "dist/apps/ClientApp",
+        "index": "apps/ClientApp/src/index.html",
+        "main": "apps/ClientApp/src/main.ts",
+        "tsConfig": "apps/ClientApp/tsconfig.json",
+        "assets": [
+          "apps/ClientApp/src/favicon.ico",
+          "apps/ClientApp/src/assets"
+        ],
+        "styles": ["apps/ClientApp/src/styles.scss"]
+      }
+    },
+    "serve": {
+      "executor": "@nx/angular:dev-server",
+      "options": {
+        "buildTarget": "client-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
