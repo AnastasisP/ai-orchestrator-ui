@@ -1,0 +1,44 @@
+<div class="pipeline-strip">
+  @for (node of nodes(); track node.role; let last = $last) {
+
+    <div class="node-wrapper">
+      <!-- Agent Node -->
+      <div
+        class="agent-node"
+        [class.node-waiting]="node.status === 'waiting'"
+        [class.node-running]="node.status === 'running'"
+        [class.node-complete]="node.status === 'complete'"
+        [class.node-error]="node.status === 'error'"
+      >
+        <!-- Icon area -->
+        <div class="node-icon" [style.color]="meta[node.role].color">
+          @switch (node.status) {
+            @case ('complete') {
+              <mat-icon>check_circle</mat-icon>
+            }
+            @case ('error') {
+              <mat-icon>error</mat-icon>
+            }
+            @default {
+              <mat-icon>{{ meta[node.role].icon }}</mat-icon>
+            }
+          }
+        </div>
+
+        <!-- Label -->
+        <span class="node-label">{{ meta[node.role].label }}</span>
+
+        <!-- Cost badge (complete only) -->
+        @if (node.status === 'complete' && node.tokenUsage) {
+          <span class="cost-badge">{{ getCostLabel(node) }}</span>
+        }
+      </div>
+
+      <!-- Arrow connector (not after last node) -->
+      @if (!last) {
+        <span class="node-arrow">→</span>
+      }
+    </div>
+
+  }
+</div>
